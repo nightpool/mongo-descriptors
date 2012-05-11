@@ -43,14 +43,14 @@ class CatDict(dict):
 		return ret
 
 class MongoI(object):
-		"""A Descriptor that represents one property in a mongo document.
-		Requires the instance to have an attribute db, which is a pymongo.Database and an attribute oi which is the value in the _id of the document
-		Suggested use is in model classes that represent a type of document
-		If name is omitted, it represents a CatDict of the document. Using CatDict with this allows you to do things like
-			x+={"some_prop": stuff}	 	#X being a MongoI with no name (i.e. MongoI()) in a object.
-		to add some_prop to the mongo Document.
-			Name is the name of the property.
-			typ is a callable that is called on the return object to standardise it. for example, int"""
+	"""A Descriptor that represents one property in a mongo document.
+	Requires the instance to have an attribute db, which is a pymongo.Database and an attribute oi which is the value in the _id of the document
+	Suggested use is in model classes that represent a type of document
+	If name is omitted, it represents a CatDict of the document. Using CatDict with this allows you to do things like
+		x+={"some_prop": stuff}	 	#X being a MongoI with no name (i.e. MongoI()) in a object.
+	to add some_prop to the mongo Document.
+		Name is the name of the property.
+		typ is a callable that is called on the return object to standardise it. for example, int"""
 	def __init__(s,name=None,typ=None,default=None):
 		s.name=name
 		s.default=default
