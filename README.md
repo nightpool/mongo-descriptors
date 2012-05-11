@@ -6,7 +6,7 @@ Some really basic descriptor-based utils for interacting with Mongo. Specificall
 Example:
 ```python
 import bson
-from mongo-descriptors import MongoI, Db
+from mongo_descriptors import MongoI, Db
 
 class Doc(object):
 	db=Db()
