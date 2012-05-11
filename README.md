@@ -9,7 +9,12 @@ import bson
 from mongo_descriptors import MongoI, Db
 
 class Doc(object):
-	db=Db()
+	db=Db("test")									# Sorry for the confusion, but when I say Db, I 
+													# really mean Collection. The actuall db can be 
+													# referenced like this.
+	db=Db("test", root="local")
+													# Root defaults to local.
+
 	some_prop=MongoI("some_prop")					# Note that if you try to get this before assigning 
 													# to it, you'll get an error. (Unless of course the 
 													# document already exists in the database)
