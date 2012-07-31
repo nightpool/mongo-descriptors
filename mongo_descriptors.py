@@ -54,6 +54,8 @@ class MongoI(object):
 	def __init__(s,name=None,typ=None,default=None):
 		s.name=name
 		s.default=default
+		if typ and (not default):
+			s.default = typ()
 		s.typ=typ
 	def __get__(s, inst, cls):
 		if s.name==None:
@@ -81,8 +83,10 @@ class MongoI(object):
 class test(object):
 	"""Just a simple test object that tests most of the features. Its in no way exhaustive, and if you find a bug, please tell me."""
 	db=Db("test", root="local")
-	stuff=MongoI("stuff")
-	this=MongoI("aNum", int,0)
+	blank=MongoI("stuff")
+	de=MongoI("de", default = "ww")
+	tnd=MongoI("tnd", int)
+	twd=MongoI("twd", int, default = 2)
 	raw=MongoI()
 	def __init__(s, oi):
 		s.oi=oi
