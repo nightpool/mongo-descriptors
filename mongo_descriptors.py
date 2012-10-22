@@ -5,9 +5,12 @@ class Db(object):
 		name is a string, the name of the colection.
 		root is a string, the actual database.
 		root defaults to local"""
-	def __init__(s, name, root="local"):		
+	def __init__(s, name=None, db=None, root="local"):		
+		s._db = db
 		s.name=name
 		s.root=root
+		if not name and not db:
+			raise ValueError("Need either a db object to base off of or a name")
 	def __get__(s, inst, cls):
 		"""Alias for get()"""
 		return s.get()
@@ -17,9 +20,9 @@ class Db(object):
 			If the value is an instance of pymongo.database.Collection or sub-classes, then the root and the name are set from that Collection
 			Else the value is cast as a string, and interpreted as the name."""			
 		if isinstance(val, pymongo.database.Collection):
-			s.name=val.name
-			s.root=val.database.root
+			s._db = val
 			return
+		s._db = None
 		if isinstance(val, basestring):		#This is so we don't accidently set name and root to the first 2 chars of a string
 			s.name=val
 			return
@@ -31,6 +34,8 @@ class Db(object):
 				s.name=str(val)
 	def get(s):
 		"""Get the db. Returns the db instance"""
+		if s._db:
+			return s._db
 		con=pymongo.Connection()
 		db=con[s.root][s.name]
 		return db
@@ -54,7 +59,7 @@ class MongoI(object):
 	def __init__(s,name=None,typ=None,default=None):
 		s.name=name
 		s.default=default
-		if typ and (not default):
+		if typ and not default:
 			s.default = typ()
 		s.typ=typ
 	def __get__(s, inst, cls):
