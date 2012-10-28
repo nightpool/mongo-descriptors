@@ -84,6 +84,16 @@ class MongoI(object):
 			new[s.name]=val
 		#print new
 		inst.db.save(new)
+	def __delete__(s,inst):
+		if s.name==None:
+			inst.db.remove({'_id':s.oi})
+			return
+		new = inst.db.find_one(inst.oi)
+		try:
+			del new[s.name]
+		except KeyError:
+			pass
+		inst.db.save(new)
 
 class test(object):
 	"""Just a simple test object that tests most of the features. Its in no way exhaustive, and if you find a bug, please tell me."""
