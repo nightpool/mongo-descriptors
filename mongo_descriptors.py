@@ -46,6 +46,8 @@ class CatDict(dict):
 		ret=s.copy()
 		ret.update(other)
 		return ret
+	def copy(s):
+		return CatDict(dict.copy(s))
 
 class MongoI(object):
 	"""A Descriptor that represents one property in a mongo document.
@@ -86,7 +88,7 @@ class MongoI(object):
 		inst.db.save(new)
 	def __delete__(s,inst):
 		if s.name==None:
-			inst.db.remove({'_id':s.oi})
+			inst.db.remove({'_id':inst.oi})
 			return
 		new = inst.db.find_one(inst.oi)
 		try:
