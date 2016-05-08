@@ -4,7 +4,6 @@ from distutils.core import setup
 setup(
     name='MongoDescriptors',
     version='0.1.0',
-    author='Evan Gilgenbach',
     author_email='eg1290@gmail.com',
     py_modules=['mongo_descriptors'],
     url='https://github.com/nightpool/mongo-descriptors',
